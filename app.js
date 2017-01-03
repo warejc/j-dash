@@ -1,4 +1,5 @@
 var express = require('express');
+var expressHbs = require('express-handlebars');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -11,7 +12,8 @@ var users = require('./routes/users');
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, '/public/views'));
+app.engine('handlebars', expressHbs({defaultLayout:'main.handlebars'}));
 app.set('view engine', 'handlebars');
 
 // uncomment after placing your favicon in /public
@@ -20,8 +22,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(express.static(__dirname + '/public'));
 app.use('/', index);
 app.use('/users', users);
 
